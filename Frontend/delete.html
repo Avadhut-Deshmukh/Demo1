@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete User</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 500px;">
+        <div style="text-align: center; padding: 60px 40px; background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%); border-left: 5px solid #ef4444; border-radius: 12px;">
+            <h1 style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px;">⚠️ Delete User</h1>
+            <p style="color: #6b7280; margin-bottom: 28px; font-size: 1.05rem; line-height: 1.6;">
+                Are you sure you want to permanently delete this user?<br>
+                <strong style="color: #111827;">This action cannot be undone.</strong>
+            </p>
+            
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <a href="/" class="btn btn-muted">← Cancel</a>
+                <button id="deleteBtn" class="btn btn-red">🗑️ Yes, Delete User</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('id');
+
+        document.getElementById('deleteBtn').addEventListener('click', function() {
+            fetch(`http://127.0.0.1:8000/users/${userId}`, {
+                method: 'DELETE'
+            }).then(() => {
+                window.location.href = '/';
+            }).catch(err => {
+                alert('Error deleting user. Please try again.');
+                console.error(err);
+            });
+        });
+    </script>
+</body>
+</html>
